@@ -1,0 +1,23 @@
+source $HOME/.profile
+
+eval "$(starship init zsh)"
+
+setopt autocd correct histignorealldups histignorespace histreduceblanks sharehistory
+
+SAVEHIST=$HISTSIZE
+
+source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+
+# pnpm
+export PNPM_HOME="$HOME/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+
+export PATH="$HOME/.composer/vendor/bin${PATH+:$PATH}"
+export PATH="$HOME/bin${PATH+:$PATH}"

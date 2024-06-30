@@ -1,0 +1,17 @@
+packages:
+  common:
+    - bat
+    - eza
+    - starship
+    - git
+    - composer
+    - wp-cli
+    - telnet
+  darwin:
+    - subversion
+    - zsh-autosuggestions
+    - zsh-syntax-highlighting
+  windows:
+    - sudo
+    - sliksvn
+    - php
