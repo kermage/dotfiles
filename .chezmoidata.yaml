@@ -4,6 +4,7 @@ packages:
     - eza
     - starship
     - git
+    - go
     - composer
     - wp-cli
     - telnet

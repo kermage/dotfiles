@@ -2,7 +2,7 @@ source $HOME/.profile
 
 eval "$(starship init zsh)"
 
-setopt autocd correct histignorealldups histignorespace histreduceblanks sharehistory
+setopt autocd correct incappendhistory histignorealldups histignorespace histreduceblanks
 
 SAVEHIST=$HISTSIZE
 
