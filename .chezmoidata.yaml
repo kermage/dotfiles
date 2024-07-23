@@ -3,6 +3,7 @@ packages:
     - bat
     - eza
     - starship
+    - zoxide
     - git
     - go
     - composer

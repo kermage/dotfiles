@@ -1,6 +1,7 @@
 source $HOME/.profile
 
 eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"
 
 setopt autocd correct incappendhistory histignorealldups histignorespace histreduceblanks
 
@@ -20,4 +21,5 @@ esac
 
 
 export PATH="$HOME/.composer/vendor/bin${PATH+:$PATH}"
+export PATH="$HOME/go/bin${PATH+:$PATH}"
 export PATH="$HOME/bin${PATH+:$PATH}"
