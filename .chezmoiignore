@@ -8,3 +8,15 @@ README.md
 {{ if ne .chezmoi.os "windows" }}
 .chezmoiscripts/windows/**
 {{ end }}
+
+{{ if ne .chezmoi.os "linux" }}
+.chezmoiscripts/linux/**
+{{ end }}
+
+{{ if eq .chezmoi.os "linux" }}
+.bash_profile
+.profile
+.profile.d
+projects
+Sites
+{{ end }}

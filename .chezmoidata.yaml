@@ -17,3 +17,8 @@ packages:
     - sudo
     - sliksvn
     - php
+  servers:
+    - crates.io/bat
+    - crates.io/eza
+    - starship.rs
+    - crates.io/zoxide
