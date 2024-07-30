@@ -2,6 +2,7 @@ source $HOME/.profile
 
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
+source <(fzf --zsh)
 
 setopt autocd correct incappendhistory histignorealldups histignorespace histreduceblanks
 
@@ -9,7 +10,10 @@ SAVEHIST=$HISTSIZE
 
 source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOMEBREW_PREFIX/share/zsh-history-substring-search/zsh-history-substring-search.zsh
 
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
 
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"

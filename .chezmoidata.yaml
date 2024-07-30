@@ -4,6 +4,9 @@ packages:
     - eza
     - starship
     - zoxide
+    - fzf
+    - fd
+    - ripgrep
     - git
     - go
     - composer
@@ -13,6 +16,7 @@ packages:
     - subversion
     - zsh-autosuggestions
     - zsh-syntax-highlighting
+    - zsh-history-substring-search
   windows:
     - sudo
     - sliksvn
@@ -22,3 +26,6 @@ packages:
     - crates.io/eza
     - starship.rs
     - crates.io/zoxide
+    - github.com/junegunn/fzf
+    - crates.io/fd-find
+    - crates.io/ripgrep
