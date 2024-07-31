@@ -1,0 +1,15 @@
+#!/bin/bash
+
+cat > $HOME/gaftenv <<'EOL'
+{{ if eq .chezmoi.os "linux" -}}
+eval "$(pkgx --internal.use +{{ .packages.servers | join " +" }})"
+
+{{ end -}}
+_SHELL=$(ps -p $$ -o 'args=' | cut -d ' ' -f 1)
+_SHELL=$(basename ${_SHELL#-})
+
+eval "$(starship init $_SHELL)"
+eval "$(zoxide init $_SHELL)"
+eval "$(fzf --$_SHELL)"
+unset _SHELL
+EOL

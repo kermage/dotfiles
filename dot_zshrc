@@ -1,8 +1,5 @@
 source $HOME/.profile
-
-eval "$(starship init zsh)"
-eval "$(zoxide init zsh)"
-source <(fzf --zsh)
+source $HOME/gaftenv
 
 setopt autocd correct incappendhistory histignorealldups histignorespace histreduceblanks
 
