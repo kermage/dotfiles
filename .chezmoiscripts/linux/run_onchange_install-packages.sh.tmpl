@@ -1,3 +1,8 @@
 #!/bin/bash
 
-pkgx install {{ .packages.servers | join " " }}
+cat > $HOME/gaftenv <<'EOL'
+eval "$(pkgx --internal.use +{{ .packages.servers | join " +" }})"
+eval "$(starship init bash)"
+eval "$(zoxide init bash)"
+eval "$(fzf --bash)"
+EOL
