@@ -5,7 +5,7 @@ cat > $HOME/gaftenv <<'EOL'
 eval "$(pkgx --internal.use +{{ .packages.servers | join " +" }})"
 
 {{ end -}}
-_SHELL=$(ps -p $$ -o 'args=' | cut -d ' ' -f 1)
+_SHELL=$(ps -{{ if eq .chezmoi.os "windows" }}s{{ end }}p $$ | tail -n 1 | awk '{print $4}')
 _SHELL=$(basename ${_SHELL#-})
 
 eval "$(starship init $_SHELL)"

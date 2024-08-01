@@ -7,3 +7,5 @@ if ( -Not ( Get-Command scoop -ErrorAction SilentlyContinue ) ) {
 if ( -Not ( Get-Command pnpm -ErrorAction SilentlyContinue ) ) {
 	iwr https://get.pnpm.io/install.ps1 -useb | iex
 }
+
+Add-Content -Path "$HOME\.config\chezmoi\chezmoi.yaml" -Value "interpreters:`n  sh:`n    command: bash"
