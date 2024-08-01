@@ -1,0 +1,15 @@
+source $HOME/.profile
+
+
+# pnpm
+export PNPM_HOME="$HOME/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+
+export PATH="$HOME/.composer/vendor/bin${PATH+:$PATH}"
+export PATH="$HOME/go/bin${PATH+:$PATH}"
+export PATH="$HOME/bin${PATH+:$PATH}"
