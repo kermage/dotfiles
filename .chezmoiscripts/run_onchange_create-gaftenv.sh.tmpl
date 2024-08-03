@@ -2,7 +2,7 @@
 
 cat > $HOME/gaftenv <<'EOL'
 {{ if eq .chezmoi.os "linux" -}}
-eval "$(pkgx --internal.use +{{ .packages.servers | join " +" }})"
+eval "$(pkgx --internal.use +{{ .packages.common | join " +" }})"
 
 {{ end -}}
 _SHELL=$(ps -{{ if eq .chezmoi.os "windows" }}s{{ end }}p $$ | tail -n 1 | awk '{print $4}')

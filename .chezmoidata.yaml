@@ -7,6 +7,7 @@ packages:
     - fzf
     - fd
     - ripgrep
+  local:
     - git
     - go
     - composer
@@ -22,10 +23,3 @@ packages:
     - sliksvn
     - php
   servers:
-    - crates.io/bat
-    - crates.io/eza
-    - starship.rs
-    - crates.io/zoxide
-    - github.com/junegunn/fzf
-    - crates.io/fd-find
-    - crates.io/ripgrep
