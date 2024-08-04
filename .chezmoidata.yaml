@@ -6,7 +6,7 @@ packages:
     - zoxide
     - fzf
     - fd
-    - ripgrep
+    - rg
   local:
     - git
     - go
