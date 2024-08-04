@@ -1,17 +1,39 @@
 #!/bin/bash
 
 cat > $HOME/gaftenv <<'EOL'
-{{ if eq .chezmoi.os "linux" -}}
-eval "$(pkgx --internal.use +{{ .packages.common | join " +" }})"
-
-{{ end -}}
 _SHELL=$(ps -{{ if eq .chezmoi.os "windows" }}s{{ end }}p $$ | tail -n 1 | awk '{print $4}')
 _SHELL=$(basename ${_SHELL#-})
 
+
+{{ if eq .chezmoi.os "linux" -}}
+{{   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
+[[ $_SHELL == "bash" ]] && _SUFFIX="handle" || _SUFFIX="handler"
+
+
+function_exists() {
+	declare -f $1 > /dev/null
+	return $?
+}
+
+command_not_found() {
+	if [[ $_SHELL == "bash" ]]; then
+		printf "%s: %s: command not found\\n" "$0" "$1" >&2
+	else
+		printf "zsh: command not found: %s\\n" "$1" >&2
+	fi
+	return 127
+}
+
+
+eval "command_not_found_${_SUFFIX}() { [ \$(command -v \${0}.exe) ] && \${0}.exe \${@:2} || command_not_found \$@; }"
+{{   end -}}
+eval "$(pkgx --internal.use +{{ .packages.common | join " +" }})"
+{{ end -}}
 eval "$(starship init $_SHELL)"
 eval "$(zoxide init $_SHELL)"
 eval "$(fzf --$_SHELL)"
 unset _SHELL
+unset _SUFFIX
 
 
 alias ls='eza --git --icons --classify --group-directories-first --time-style=long-iso --group'
