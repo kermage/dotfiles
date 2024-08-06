@@ -1,15 +1,17 @@
 #!/bin/bash
 
 cat > $HOME/gaftenv <<'EOL'
+#!/usr/bin/env sh
+
+
 _SHELL=$(ps -{{ if eq .chezmoi.os "windows" }}s{{ end }}p $$ | tail -n 1 | awk '{print $4}')
 _SHELL=$(basename ${_SHELL#-})
+
+[[ $_SHELL == "bash" ]] && _SUFFIX="handle" || _SUFFIX="handler"
 
 
 {{ if eq .chezmoi.os "linux" -}}
 {{   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
-[[ $_SHELL == "bash" ]] && _SUFFIX="handle" || _SUFFIX="handler"
-
-
 function_exists() {
 	declare -f $1 > /dev/null
 	return $?
@@ -40,7 +42,7 @@ alias ls='eza --git --icons --classify --group-directories-first --time-style=lo
 alias cat='bat --style="full" --theme="Dracula"'
 alias gl='git log --oneline --graph --decorate'
 
-mkcd() { mkdir $1 && cd $1; }
+mkcd() { mkdir -p $1 && cd $1; }
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
