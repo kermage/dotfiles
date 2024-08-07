@@ -7,6 +7,9 @@ packages:
     - fzf
     - fd
     - rg
+    - yazi
+    - lazygit
+    - bottom
   local:
     - git
     - go
@@ -20,9 +23,14 @@ packages:
     - zsh-syntax-highlighting
     - zsh-history-substring-search
     - font-jetbrains-mono-nerd-font
+    - sevenzip
+    - git-delta
   windows:
     - sudo
     - sliksvn
     - php
     - jetbrainsmono-nf
+    - 7zip
+    - delta
   servers:
+    - delta

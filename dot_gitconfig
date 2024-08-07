@@ -4,6 +4,12 @@
 [core]
 	autocrlf = false
 	longpaths = true
+	pager = delta
+[delta]
+	navigate = true
+	line-numbers = true
+[diff]
+	colorMoved = default
 [pull]
 	rebase = false
 [init]
