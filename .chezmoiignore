@@ -19,6 +19,7 @@ README.md
 .bashrc
 .profile
 .profile.d
+.config/wezterm
 projects
 Sites
 {{ end }}

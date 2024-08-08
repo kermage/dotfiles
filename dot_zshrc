@@ -4,9 +4,29 @@ setopt autocd correct incappendhistory histignorealldups histignorespace histred
 
 SAVEHIST=$HISTSIZE
 
+autoload -Uz compinit
+zmodload zsh/complist
+_comp_options+=(globdots)
+compinit -d ~/.cache/.zcompdump
+
+zstyle ':completion:*:*:-command-:*:*' group-order alias builtins commands functions
+#zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:default' menu select
+
+zstyle ':completion:*:*:*:*:descriptions' format '%F{green}-- %d --%f'
+zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
+zstyle ':completion:*:warnings' format ' %F{red}-- %d --%f'
+
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
+zstyle ':completion:*' complete-options true
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' file-list all
+
 source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $HOMEBREW_PREFIX/share/zsh-history-substring-search/zsh-history-substring-search.zsh
 
+bindkey -M menuselect '^[' undo
+bindkey '^[[Z' reverse-menu-complete
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down

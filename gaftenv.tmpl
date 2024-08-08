@@ -26,7 +26,7 @@ command_not_found() {
 
 eval "command_not_found_${_SUFFIX}() { [ \$(command -v \${0}.exe) ] && \${0}.exe \${@:2} || command_not_found \$@; }"
 {{   end -}}
-eval "$(pkgx --internal.use +{{ .packages.common | join " +" }})"
+eval "$(pkgx --internal.use +{{ .packages.common | join " +" }} +{{ .packages.servers | join " +" }})"
 {{ end -}}
 eval "$(starship init $_SHELL)"
 eval "$(zoxide init $_SHELL)"
@@ -39,9 +39,9 @@ export FZF_DEFAULT_OPTS_FILE="${HOME}/.config/fzf/config"
 
 
 alias ls='eza --git --icons --classify --group-directories-first --time-style=long-iso --group'
-alias cat='bat --paging="always" --wrap="never"'
+alias gl='git log --pretty="format:%Cgreen%h %Cblue%ai %C(auto)%d %s" --graph'
 alias lg='lazygit --use-config-dir="${HOME}/.config/lazygit"'
-alias gl='git log --oneline --graph --decorate'
+alias cat='bat --paging="always" --wrap="never"'
 
 mkcd() { mkdir -p $1 && cd $1; }
 alias ..='cd ..'
