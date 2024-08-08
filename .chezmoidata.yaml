@@ -6,10 +6,8 @@ packages:
     - zoxide
     - fzf
     - fd
-    - rg
     - yazi
     - lazygit
-    - bottom
   local:
     - git
     - go
@@ -17,6 +15,8 @@ packages:
     - wp-cli
     - telnet
     - wezterm
+    - ripgrep
+    - bottom
   darwin:
     - subversion
     - zsh-autosuggestions
@@ -33,4 +33,6 @@ packages:
     - 7zip
     - delta
   servers:
+    - rg
+    - btm
     - delta
