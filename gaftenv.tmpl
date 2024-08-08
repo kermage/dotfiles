@@ -35,8 +35,12 @@ unset _SHELL
 unset _SUFFIX
 
 
+export FZF_DEFAULT_OPTS_FILE="${HOME}/.config/fzf/config"
+
+
 alias ls='eza --git --icons --classify --group-directories-first --time-style=long-iso --group'
-alias cat='bat --style="full" --theme="Dracula"'
+alias cat='bat --paging="always" --wrap="never"'
+alias lg='lazygit --use-config-dir="${HOME}/.config/lazygit"'
 alias gl='git log --oneline --graph --decorate'
 
 mkcd() { mkdir -p $1 && cd $1; }

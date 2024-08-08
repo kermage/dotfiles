@@ -1,0 +1,4 @@
+--ansi
+--preview="bat {}"
+--layout="reverse"
+--multi
