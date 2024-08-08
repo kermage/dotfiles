@@ -1,0 +1,20 @@
+.vim/pack/themes/start/dracula:
+  type: git-repo
+  url: https://github.com/dracula/vim
+
+.vim/pack/plugins/start/fugitive:
+  type: git-repo
+  url: https://github.com/tpope/vim-fugitive
+
+.vim/pack/plugins/start/fzf:
+  type: git-repo
+  url: https://github.com/junegunn/fzf.vim
+
+.vim/pack/plugins/start/gitgutter:
+  type: git-repo
+  url: https://github.com/airblade/vim-gitgutter
+
+.vim/pack/plugins/start/lightline:
+  type: git-repo
+  url: https://github.com/itchyny/lightline.vim
+

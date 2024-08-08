@@ -1,0 +1,58 @@
+if v:version <= 802
+    packadd! dracula
+endif
+
+syntax on
+colorscheme dracula
+
+let g:lightline = {'colorscheme': 'dracula'}
+
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
+
+set rtp+=/opt/homebrew/opt/fzf
+
+set termguicolors
+set nocompatible
+set noshowmode
+set splitright
+set splitbelow
+
+set laststatus=2
+"set showcmdloc=statusline
+set showcmd
+
+set history=100
+set updatetime=200
+set ttimeoutlen=400
+set ttimeout
+
+set ruler
+set number
+set relativenumber
+set cursorline
+"set cursorcolumn
+
+"set list
+set listchars=tab:→\ ,trail:·,precedes:«,extends:»,eol:⏎
+set backspace=indent,eol,start
+
+set nowrap
+set sidescroll=1
+set sidescrolloff=10
+set scrolloff=10
+
+set smartindent
+set smarttab
+set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+
+set hlsearch
+set incsearch
+set wildmenu
+
+set clipboard="unnamedplus"
+set encoding=utf-8
+set mouse="a"
