@@ -15,6 +15,7 @@ set nocompatible
 set noshowmode
 set splitright
 set splitbelow
+set autochdir
 
 set laststatus=2
 "set showcmdloc=statusline
