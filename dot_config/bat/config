@@ -1,3 +1,4 @@
 --style="full"
---force-colorization
+--color="always"
+--decorations="always"
 --theme="Catppuccin Macchiato"

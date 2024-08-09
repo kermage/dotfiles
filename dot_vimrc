@@ -10,8 +10,6 @@ let g:lightline = {'colorscheme': 'catppuccin_macchiato'}
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
 
-set rtp+=/opt/homebrew/opt/fzf
-
 set termguicolors
 set nocompatible
 set noshowmode

@@ -1,7 +1,3 @@
-.vim/pack/themes/start/catppuccin:
-  type: git-repo
-  url: https://github.com/catppuccin/vim
-
 .config/bat/themes/Catppuccin Macchiato.tmTheme:
   type: file
   url: https://raw.githubusercontent.com/catppuccin/bat/main/themes/Catppuccin%20Macchiato.tmTheme
@@ -17,6 +13,14 @@
 .config/yazi/theme.toml:
   type: file
   url: https://raw.githubusercontent.com/catppuccin/yazi/main/themes/macchiato.toml
+
+.vim/after/plugin/fzf.vim:
+  type: file
+  url: https://raw.githubusercontent.com/junegunn/fzf/master/plugin/fzf.vim
+
+.vim/pack/themes/start/catppuccin:
+  type: git-repo
+  url: https://github.com/catppuccin/vim
 
 .vim/pack/plugins/start/editorconfig:
   type: git-repo
@@ -37,3 +41,17 @@
 .vim/pack/plugins/start/lightline:
   type: git-repo
   url: https://github.com/itchyny/lightline.vim
+
+.zsh:
+  type: archive
+  url: https://github.com/zsh-users/zsh-syntax-highlighting/archive/master.zip
+  stripComponents: 1
+  include: ["*/*.zsh", "*/.version", "*/.revision-hash", "*/highlighters/**"]
+
+.zsh/zsh-autosuggestions.zsh:
+  type: file
+  url: https://raw.githubusercontent.com/zsh-users/zsh-autosuggestions/master/zsh-autosuggestions.zsh
+
+.zsh/zsh-history-substring-search.zsh:
+  type: file
+  url: https://raw.githubusercontent.com/zsh-users/zsh-history-substring-search/master/zsh-history-substring-search.zsh

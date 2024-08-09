@@ -19,9 +19,6 @@ packages:
     - bottom
   darwin:
     - subversion
-    - zsh-autosuggestions
-    - zsh-syntax-highlighting
-    - zsh-history-substring-search
     - font-jetbrains-mono-nerd-font
     - sevenzip
     - git-delta
