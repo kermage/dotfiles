@@ -1,11 +1,11 @@
 if v:version <= 802
-    packadd! dracula
+    packadd! catppuccin
 endif
 
 syntax on
-colorscheme dracula
+colorscheme catppuccin_macchiato
 
-let g:lightline = {'colorscheme': 'dracula'}
+let g:lightline = {'colorscheme': 'catppuccin_macchiato'}
 
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"

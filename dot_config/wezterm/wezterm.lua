@@ -15,7 +15,7 @@ config.window_padding = {
     bottom = 0,
 }
 
-config.color_scheme = "Dracula (Official)"
+config.color_scheme = "Catppuccin Macchiato"
 config.font = wezterm.font("JetBrainsMono Nerd Font", {weight = "Bold"})
 config.font_size = 15.0
 config.line_height = 1.25

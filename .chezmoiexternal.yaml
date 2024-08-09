@@ -1,6 +1,26 @@
-.vim/pack/themes/start/dracula:
+.vim/pack/themes/start/catppuccin:
   type: git-repo
-  url: https://github.com/dracula/vim
+  url: https://github.com/catppuccin/vim
+
+.config/bat/themes/Catppuccin Macchiato.tmTheme:
+  type: file
+  url: https://raw.githubusercontent.com/catppuccin/bat/main/themes/Catppuccin%20Macchiato.tmTheme
+
+.config/delta/catppuccin.config:
+  type: file
+  url: https://raw.githubusercontent.com/catppuccin/delta/main/catppuccin.gitconfig
+
+.config/yazi/Catppuccin-macchiato.tmTheme:
+  type: file
+  url: https://raw.githubusercontent.com/catppuccin/bat/main/themes/Catppuccin%20Macchiato.tmTheme
+
+.config/yazi/theme.toml:
+  type: file
+  url: https://raw.githubusercontent.com/catppuccin/yazi/main/themes/macchiato.toml
+
+.vim/pack/plugins/start/editorconfig:
+  type: git-repo
+  url: https://github.com/editorconfig/editorconfig-vim
 
 .vim/pack/plugins/start/fugitive:
   type: git-repo
@@ -17,4 +37,3 @@
 .vim/pack/plugins/start/lightline:
   type: git-repo
   url: https://github.com/itchyny/lightline.vim
-

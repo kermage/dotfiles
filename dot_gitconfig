@@ -8,9 +8,12 @@
 [delta]
 	navigate = true
 	line-numbers = true
+	features = catppuccin-macchiato
 [diff]
 	colorMoved = default
 [pull]
 	rebase = false
 [init]
 	defaultBranch = main
+[include]
+	path = ~/.config/delta/catppuccin.config
