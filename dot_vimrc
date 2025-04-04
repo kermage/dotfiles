@@ -21,6 +21,7 @@ set laststatus=2
 "set showcmdloc=statusline
 set showcmd
 
+set redrawtime=0
 set history=100
 set updatetime=200
 set ttimeoutlen=400
