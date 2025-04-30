@@ -12,7 +12,7 @@
 
 .config/yazi/theme.toml:
   type: file
-  url: https://raw.githubusercontent.com/catppuccin/yazi/main/themes/macchiato.toml
+  url: https://raw.githubusercontent.com/catppuccin/yazi/main/themes/macchiato/catppuccin-macchiato-mauve.toml
 
 .vim/after/plugin/fzf.vim:
   type: file
