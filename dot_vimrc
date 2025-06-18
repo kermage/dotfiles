@@ -34,6 +34,7 @@ set cursorline
 "set cursorcolumn
 
 "set list
+set encoding=utf-8
 set listchars=tab:→\ ,trail:·,precedes:«,extends:»,eol:⏎
 set backspace=indent,eol,start
 
@@ -54,5 +55,4 @@ set incsearch
 set wildmenu
 
 set clipboard="unnamedplus"
-set encoding=utf-8
 set mouse="a"
