@@ -6,8 +6,8 @@ packages:
     - zoxide
     - fzf
     - fd
-    - yazi
     - lazygit
+    - yazi
   local:
     - git
     - go
