@@ -1,8 +1,14 @@
 #!/usr/bin/env sh
 
 
-_SHELL=$(ps -{{ if eq .chezmoi.os "windows" }}s{{ end }}p $$ | tail -n 1 | awk '{print $4}')
-_SHELL=$(basename ${_SHELL#-})
+_SHELL=""
+_SUFFIX=""
+
+if [ -n "$BASH_VERSION" ]; then
+    _SHELL="bash"
+elif [ -n "$ZSH_VERSION" ]; then
+    _SHELL="zsh"
+fi
 
 [[ $_SHELL == "bash" ]] && _SUFFIX="handle" || _SUFFIX="handler"
 
@@ -28,9 +34,13 @@ eval "command_not_found_${_SUFFIX}() { [ \$(command -v \${0}.exe) ] && \${0}.exe
 {{   end -}}
 eval "$(pkgx +{{ .packages.common | join " +" }} +{{ .packages.servers | join " +" }})"
 {{ end -}}
-eval "$(starship init $_SHELL)"
-eval "$(zoxide init $_SHELL)"
-eval "$(fzf --$_SHELL)"
+
+if [ -n "$_SHELL" ]; then
+	eval "$(starship init $_SHELL)"
+	eval "$(zoxide init $_SHELL)"
+	eval "$(fzf --$_SHELL)"
+fi
+
 unset _SHELL
 unset _SUFFIX
 
