@@ -10,11 +10,11 @@ elif [ -n "$ZSH_VERSION" ]; then
     _SHELL="zsh"
 fi
 
+{{ if eq .chezmoi.os "linux" -}}
+{{   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
 [[ $_SHELL == "bash" ]] && _SUFFIX="handle" || _SUFFIX="handler"
 
 
-{{ if eq .chezmoi.os "linux" -}}
-{{   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
 function_exists() {
 	declare -f $1 > /dev/null
 	return $?
@@ -33,8 +33,8 @@ command_not_found() {
 eval "command_not_found_${_SUFFIX}() { [ \$(command -v \${0}.exe) ] && \${0}.exe \${@:2} || command_not_found \$@; }"
 {{   end -}}
 eval "$(pkgx +{{ .packages.common | join " +" }} +{{ .packages.servers | join " +" }})"
-{{ end -}}
 
+{{ end -}}
 if [ -n "$_SHELL" ]; then
 	eval "$(starship init $_SHELL)"
 	eval "$(zoxide init $_SHELL)"
