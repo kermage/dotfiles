@@ -8,6 +8,7 @@ packages:
     - fd
     - lazygit
     - yazi
+    - rclone
   local:
     - git
     - go
@@ -17,6 +18,8 @@ packages:
     - wezterm
     - ripgrep
     - bottom
+    - act
+    - cloudflared
   darwin:
     - subversion
     - font-jetbrains-mono-nerd-font
