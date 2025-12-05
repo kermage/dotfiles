@@ -5,6 +5,7 @@
 	autocrlf = false
 	longpaths = true
 	pager = delta
+	excludesFile = ~/.gitignore
 [delta]
 	navigate = true
 	line-numbers = true
