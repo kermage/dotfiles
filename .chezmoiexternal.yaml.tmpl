@@ -42,11 +42,12 @@
   type: git-repo
   url: https://github.com/itchyny/lightline.vim
 
+{{ if eq .chezmoi.os "darwin" }}
 .zsh:
   type: archive
   url: https://github.com/zsh-users/zsh-syntax-highlighting/archive/master.zip
   stripComponents: 1
-  include: ["*/*.zsh", "*/.version", "*/.revision-hash", "*/highlighters/**"]
+  include: ['*/*.zsh', '*/.version', '*/.revision-hash', '*/highlighters/**']
 
 .zsh/zsh-autosuggestions.zsh:
   type: file
@@ -55,3 +56,4 @@
 .zsh/zsh-history-substring-search.zsh:
   type: file
   url: https://raw.githubusercontent.com/zsh-users/zsh-history-substring-search/master/zsh-history-substring-search.zsh
+{{ end }}

@@ -1,0 +1,8 @@
+{{ if eq .chezmoi.os "windows" -}}
+[interpreters.sh]
+command = "scoop/apps/git/current/bin/bash.exe"
+
+{{ end -}}
+[diff]
+command = "delta"
+pager = "delta"

@@ -1,5 +1,5 @@
 gui:
-  nerdFontsVersion: 3
+  nerdFontsVersion: '3'
   commitAuthorShortLength: 4
   commitAuthorLongLength: 12
   showBranchCommitHash: true
@@ -30,6 +30,6 @@ gui:
     '*': '#b7bdf8'
 
 git:
-  paging:
-    colorArg: always
-    pager: delta --paging=never
+  pagers:
+    - colorArg: always
+      pager: delta --paging=never
