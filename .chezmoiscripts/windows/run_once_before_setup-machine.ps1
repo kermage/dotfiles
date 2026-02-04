@@ -7,6 +7,10 @@ if ( -Not ( Get-Command scoop -ErrorAction SilentlyContinue ) ) {
 	scoop bucket add nerd-fonts
 }
 
+if ( -Not ( Get-Command atuin -ErrorAction SilentlyContinue ) ) {
+	Invoke-RestMethod -Uri https://setup.atuin.sh | sh
+}
+
 if ( -Not ( Get-Command pnpm -ErrorAction SilentlyContinue ) ) {
 	iwr https://get.pnpm.io/install.ps1 -useb | iex
 }

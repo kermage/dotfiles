@@ -36,6 +36,7 @@ eval "$(pkgx +{{ .packages.common | join " +" }} +{{ .packages.servers | join " 
 
 {{ end -}}
 if [ -n "$_SHELL" ]; then
+	eval "$(atuin init $_SHELL)"
 	eval "$(starship init $_SHELL)"
 	eval "$(zoxide init $_SHELL)"
 	eval "$(fzf --$_SHELL)"

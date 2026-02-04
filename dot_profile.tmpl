@@ -5,6 +5,8 @@ export SHELL_SESSION_DID_INIT=1
 
 {{ end -}}
 
+. "$HOME/.atuin/bin/env"
+
 if [ -d "${HOME}/.profile.d" ] ; then
 	for script in ${HOME}/.profile.d/*.sh ; do
 		echo Sourcing "${script}" ...

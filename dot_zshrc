@@ -31,5 +31,3 @@ HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND="bg=red,fg=black,bold"
 
 bindkey -M menuselect '^[' undo
 bindkey -M menuselect '^[[Z' reverse-menu-complete
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
