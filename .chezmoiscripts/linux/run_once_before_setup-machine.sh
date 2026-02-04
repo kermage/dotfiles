@@ -1,5 +1,15 @@
 #!/bin/bash
 
-curl -Ssf https://pkgx.sh | sh
+has() {
+  command -v "$1" 1>/dev/null 2>&1
+}
+
+if ! has pkgx; then
+  curl -Ssf https://pkgx.sh | sh
+fi
+
 pkgx dev integrate
-curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+
+if ! has atuin; then
+  curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+fi

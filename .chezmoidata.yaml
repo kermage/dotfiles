@@ -1,7 +1,9 @@
 packages:
   common:
+    - git
     - bat
     - eza
+    - delta
     - starship
     - zoxide
     - fzf
@@ -10,8 +12,8 @@ packages:
     - yazi
     - rclone
   local:
-    - git
     - go
+    - php
     - composer
     - wp-cli
     - telnet
@@ -23,14 +25,10 @@ packages:
   darwin:
     - subversion
     - font-jetbrains-mono-nerd-font
-    - git-delta
   windows:
     - sudo
     - sliksvn
-    - php
     - jetbrainsmono-nf
-    - delta
   servers:
     - rg
     - btm
-    - delta
