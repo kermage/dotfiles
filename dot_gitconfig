@@ -6,6 +6,8 @@
 	longpaths = true
 	pager = delta
 	excludesFile = ~/.gitignore
+[credential]
+	helper = manager
 [delta]
 	navigate = true
 	line-numbers = true
