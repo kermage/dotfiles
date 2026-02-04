@@ -23,14 +23,12 @@ packages:
   darwin:
     - subversion
     - font-jetbrains-mono-nerd-font
-    - sevenzip
     - git-delta
   windows:
     - sudo
     - sliksvn
     - php
     - jetbrainsmono-nf
-    - 7zip
     - delta
   servers:
     - rg

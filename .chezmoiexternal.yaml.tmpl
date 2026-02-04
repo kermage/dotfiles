@@ -19,28 +19,40 @@
   url: https://raw.githubusercontent.com/junegunn/fzf/master/plugin/fzf.vim
 
 .vim/pack/themes/start/catppuccin:
-  type: git-repo
-  url: https://github.com/catppuccin/vim
+  type: archive
+  url: https://github.com/catppuccin/vim/archive/main.zip
+  exact: true
+  stripComponents: 1
 
 .vim/pack/plugins/start/editorconfig:
-  type: git-repo
-  url: https://github.com/editorconfig/editorconfig-vim
+  type: archive
+  url: https://github.com/editorconfig/editorconfig-vim/archive/master.zip
+  exact: true
+  stripComponents: 1
 
 .vim/pack/plugins/start/fugitive:
-  type: git-repo
-  url: https://github.com/tpope/vim-fugitive
+  type: archive
+  url: https://github.com/tpope/vim-fugitive/archive/master.zip
+  exact: true
+  stripComponents: 1
 
 .vim/pack/plugins/start/fzf:
-  type: git-repo
-  url: https://github.com/junegunn/fzf.vim
+  type: archive
+  url: https://github.com/junegunn/fzf.vim/archive/master.zip
+  exact: true
+  stripComponents: 1
 
 .vim/pack/plugins/start/gitgutter:
-  type: git-repo
-  url: https://github.com/airblade/vim-gitgutter
+  type: archive
+  url: https://github.com/airblade/vim-gitgutter/archive/main.zip
+  exact: true
+  stripComponents: 1
 
 .vim/pack/plugins/start/lightline:
-  type: git-repo
-  url: https://github.com/itchyny/lightline.vim
+  type: archive
+  url: https://github.com/itchyny/lightline.vim/archive/master.zip
+  exact: true
+  stripComponents: 1
 
 {{ if eq .chezmoi.os "darwin" }}
 .zsh:
