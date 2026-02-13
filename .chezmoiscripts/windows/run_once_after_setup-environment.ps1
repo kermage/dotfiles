@@ -1,6 +1,7 @@
 [Environment]::SetEnvironmentVariable("XDG_CONFIG_HOME", "%USERPROFILE%\.config", "User")
 [Environment]::SetEnvironmentVariable("BAT_CONFIG_DIR", "%USERPROFILE%\.config\bat", "User")
 [Environment]::SetEnvironmentVariable("YAZI_CONFIG_HOME", "%USERPROFILE%\.config\yazi", "User")
+[Environment]::SetEnvironmentVariable("YAZI_FILE_ONE", "%GIT_INSTALL_ROOT%\usr\bin\file.exe", "User")
 
 if ( -Not ( Get-Command scoop -ErrorAction SilentlyContinue ) ) {
 	$env:PATH = [System.Environment]::GetEnvironmentVariable("PATH", "Machine") + ";" +

@@ -2,3 +2,8 @@
 show_hidden = true
 linemode = "mtime"
 scrolloff = 10
+
+[preview]
+tab_size = 4
+max_width = 1920
+max_height = 1080

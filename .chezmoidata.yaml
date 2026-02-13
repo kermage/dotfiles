@@ -10,6 +10,9 @@ packages:
     - fd
     - lazygit
     - yazi
+    - jq
+    - ffmpeg
+    - imagemagick
     - rclone
   local:
     - go
@@ -22,10 +25,14 @@ packages:
     - bottom
     - act
     - cloudflared
+    - poppler
+    - resvg
   darwin:
+    - sevenzip
     - subversion
     - font-jetbrains-mono-nerd-font
   windows:
+    - 7zip
     - sudo
     - sliksvn
     - jetbrainsmono-nf
