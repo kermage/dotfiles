@@ -1,0 +1,8 @@
+{{ if eq .chezmoi.os "linux" -}}
+[tools]
+{{- range .packages.common }}
+{{- if ne . "git" }}
+"{{ . }}" = "latest"
+{{- end }}
+{{- end }}
+{{ end -}}

@@ -1,0 +1,8 @@
+#!/bin/bash
+# {{ .packages.common | join " " }}
+
+if [ -f "${HOME}/.config/mise/config.toml" ]; then
+	PATH="$HOME/.local/bin${PATH+:$PATH}"
+
+	mise install
+fi

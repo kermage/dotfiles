@@ -14,6 +14,8 @@ packages:
     - ffmpeg
     - imagemagick
     - rclone
+    - ripgrep
+    - bottom
   local:
     - go
     - php
@@ -21,8 +23,6 @@ packages:
     - wp-cli
     - telnet
     - wezterm
-    - ripgrep
-    - bottom
     - act
     - cloudflared
     - poppler
@@ -36,6 +36,3 @@ packages:
     - sudo
     - sliksvn
     - jetbrainsmono-nf
-  servers:
-    - rg
-    - btm

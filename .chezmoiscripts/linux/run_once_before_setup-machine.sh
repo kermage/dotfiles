@@ -4,11 +4,15 @@ has() {
   command -v "$1" 1>/dev/null 2>&1
 }
 
-if ! has pkgx; then
-  curl -Ssf https://pkgx.sh | sh
-fi
+SUDO=""
+[ "$(id -u)" -ne 0 ] && SUDO="sudo"
 
-pkgx dev integrate
+$SUDO apt-get update -q
+$SUDO apt-get install -y curl ca-certificates git
+
+if ! has mise; then
+  curl https://mise.run | sh
+fi
 
 if ! has atuin; then
   curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh

@@ -32,10 +32,9 @@ command_not_found() {
 
 eval "command_not_found_${_SUFFIX}() { [ \$(command -v \${0}.exe) ] && \${0}.exe \${@:2} || command_not_found \$@; }"
 {{   end -}}
-eval "$(pkgx +{{ .packages.common | join " +" }} +{{ .packages.servers | join " +" }})"
-
 {{ end -}}
 if [ -n "$_SHELL" ]; then
+	eval "$(mise activate $_SHELL)"
 	eval "$(atuin init $_SHELL)"
 	eval "$(starship init $_SHELL)"
 	eval "$(zoxide init $_SHELL)"
