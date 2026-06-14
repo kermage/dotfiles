@@ -16,7 +16,10 @@ packages:
     - rclone
     - ripgrep
     - bottom
+    - croc
   local:
+    - gh
+    - uv
     - go
     - php
     - composer

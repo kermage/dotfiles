@@ -14,9 +14,13 @@
 	features = catppuccin-macchiato
 [diff]
 	colorMoved = default
+[merge]
+	ff = true
 [pull]
 	rebase = false
 [init]
 	defaultBranch = main
+[advice]
+	addIgnoredFile = false
 [include]
 	path = ~/.config/delta/catppuccin.config

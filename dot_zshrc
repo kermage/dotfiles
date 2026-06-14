@@ -4,6 +4,8 @@ setopt autocd correct incappendhistory histignorealldups histignorespace histred
 
 SAVEHIST=$HISTSIZE
 
+fpath=(~/.zsh/completion $fpath)
+
 autoload -Uz compinit
 zmodload zsh/complist
 _comp_options+=(globdots)

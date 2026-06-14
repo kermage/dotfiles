@@ -4,8 +4,8 @@ source $HOME/.profile
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
 esac
 # pnpm end
 
@@ -13,3 +13,4 @@ esac
 export PATH="$HOME/.composer/vendor/bin${PATH+:$PATH}"
 export PATH="$HOME/go/bin${PATH+:$PATH}"
 export PATH="$HOME/bin${PATH+:$PATH}"
+export PATH="$HOME/.local/bin${PATH+:$PATH}"
