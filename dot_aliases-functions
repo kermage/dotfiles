@@ -1,0 +1,157 @@
+# Convenience & Navigation aliases.
+alias cls='clear'
+
+alias ~='cd ~'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+
+# Safety aliases to prompt before overwriting.
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+alias ln='ln -i'
+
+# Date and time helpers.
+alias now='date +"%Y-%m-%d %H:%M:%S"'
+alias nowdate='date +"%Y-%m-%d"'
+alias nowtime='date +"%H:%M:%S"'
+alias timestamp='date +%s'
+
+# Create a directory and change into it.
+mkcd() {
+    mkdir -p "$1" && cd "$1"
+}
+
+# Create a backup of a file with timestamp.
+backup() {
+    if [ -f "$1" ]; then
+        local backup_file; backup_file="$1.backup-$(date +%Y%m%d-%H%M%S)"
+        cp "$1" "$backup_file"
+        echo "Backup created: $backup_file"
+    else
+        echo "'$1' is not a valid file" >&2
+        return 1
+    fi
+}
+
+# Extract any archive file with a single command.
+extract() {
+    if [ -f "$1" ]; then
+        case "$1" in
+            *.tar.bz2)   tar xjf "$1"      ;;
+            *.tar.gz)    tar xzf "$1"      ;;
+            *.tar.xz)    tar xJf "$1"      ;;
+            *.bz2)       bunzip2 "$1"      ;;
+            *.rar)       unrar x "$1"      ;;
+            *.gz)        gunzip "$1"       ;;
+            *.tar)       tar xf "$1"       ;;
+            *.tbz2)      tar xjf "$1"      ;;
+            *.tgz)       tar xzf "$1"      ;;
+            *.zip)       unzip "$1"        ;;
+            *.Z)         uncompress "$1"   ;;
+            *.7z)        7z x "$1"         ;;
+            *.deb)       ar x "$1"         ;;
+            *.tar.zst)
+                if command -v zstd &>/dev/null; then
+                    zstd -dc "$1" | tar xf -
+                else
+                    tar --zstd -xf "$1"
+                fi
+                ;;
+            *)
+                echo "'$1' cannot be extracted via extract()" >&2
+                return 1 # Add return 1 for consistency
+                ;;
+        esac
+    else
+        echo "'$1' is not a valid file" >&2
+        return 1
+    fi
+}
+
+# Create a tarball of a directory.
+targz() {
+    if [ -d "$1" ]; then
+        tar czf "${1%%/}.tar.gz" "${1%%/}"
+        echo "Created ${1%%/}.tar.gz"
+    else
+        echo "'$1' is not a valid directory" >&2
+        return 1
+    fi
+}
+
+# Show disk usage of current directory, sorted by size.
+duh() {
+    du -h --max-depth=1 "${1:-.}" | sort -hr
+}
+
+# Get the size of a file or directory.
+sizeof() {
+    du -sh "$1" 2>/dev/null
+}
+
+# System resource helpers.
+alias df='df -h'
+alias du='du -h'
+
+# Git shortcuts (if git is available).
+if command -v git &>/dev/null; then
+    alias gs='git status'
+    alias ga='git add'
+    alias gc='git commit'
+    alias gp='git push'
+    alias gd='git diff'
+    alias gb='git branch'
+	alias gs='git status'
+	alias gr='git remote'
+    alias gco='git checkout'
+	alias gcl='git clone'
+	alias gpu='git pull'
+	alias gfs='git fetch && git status'
+
+	alias gl='git log --pretty="format:%Cgreen%h %Cblue%ai %C(auto)%d %s" --graph'
+
+	gcm() { git commit -m "$*"; }
+	gcmp() { git commit -m "$*" && git push; }
+fi
+
+# Docker shortcuts (if docker is available) ---
+if command -v docker &>/dev/null; then
+    # Core Docker aliases
+	alias dx='docker exec -it'
+	alias dr='docker run --rm -it'
+    alias di='docker images'
+    alias dv='docker volume ls'
+    alias dn='docker network ls'
+    alias dps='docker ps'
+    alias dlog='docker logs -f'
+
+	# Enter container shell (bash or sh fallback)
+	dsh() {
+		if [ -z "$1" ]; then
+			echo "Usage: dsh <container-name-or-id>" >&2
+			return 1
+		fi
+		docker exec -it "$1" bash 2>/dev/null || docker exec -it "$1" sh
+	}
+
+    # Docker Compose v2 aliases (check if the compose plugin exists)
+    if docker compose version &>/dev/null; then
+        alias dc='docker compose'
+        alias dcup='docker compose up -d'
+        alias dcdown='docker compose down'
+        alias dclogs='docker compose logs -f'
+        alias dcbuild='docker compose build'
+
+		# Docker Compose enter shell (bash or sh fallback)
+		dcsh() {
+			if [ -z "$1" ]; then
+				echo "Usage: dcsh <service-name>" >&2
+				return 1
+			fi
+			docker compose exec "$1" bash 2>/dev/null || docker compose exec "$1" sh
+		}
+    fi
+fi
