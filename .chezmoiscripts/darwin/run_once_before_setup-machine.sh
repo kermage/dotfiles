@@ -11,7 +11,7 @@ else
 fi
 
 if ! has atuin; then
-  curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+  curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh -s -- --non-interactive
 else
   atuin update
 fi

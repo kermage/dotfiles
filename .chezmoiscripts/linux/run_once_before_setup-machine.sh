@@ -12,8 +12,12 @@ $SUDO apt-get install -y curl ca-certificates git file
 
 if ! has mise; then
   curl https://mise.run | sh
+else
+	mise self-update --yes
 fi
 
 if ! has atuin; then
-  curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+  curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh -s -- --non-interactive
+else
+  atuin update
 fi
