@@ -30,6 +30,7 @@ packages:
     - cloudflared
     - poppler
     - resvg
+    - dtop
   darwin:
     - sevenzip
     - subversion

@@ -8,7 +8,7 @@ SUDO=""
 [ "$(id -u)" -ne 0 ] && SUDO="sudo"
 
 $SUDO apt-get update -q
-$SUDO apt-get install -y curl ca-certificates git
+$SUDO apt-get install -y curl ca-certificates git file
 
 if ! has mise; then
   curl https://mise.run | sh

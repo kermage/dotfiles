@@ -14,3 +14,15 @@ if [ -d "${HOME}/.profile.d" ] ; then
 		echo
 	done
 fi
+
+
+# pnpm
+export PNPM_HOME="$HOME/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end
+
+export PATH="$HOME/bin${PATH+:$PATH}"
+export PATH="$HOME/.local/bin${PATH+:$PATH}"
