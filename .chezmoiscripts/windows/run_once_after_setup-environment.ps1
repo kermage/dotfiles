@@ -9,3 +9,6 @@ if ( -Not ( Get-Command scoop -ErrorAction SilentlyContinue ) ) {
 }
 
 bat cache --build
+
+pnpm runtime set --global node latest
+pnpm install --global npm

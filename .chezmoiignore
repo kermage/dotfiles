@@ -10,6 +10,10 @@ README.md
 .chezmoiscripts/windows/**
 {{ end }}
 
+{{ if eq .chezmoi.os "windows" }}
+.config/mise
+{{ end }}
+
 {{ if ne .chezmoi.os "linux" }}
 .chezmoiscripts/linux/**
 {{ end }}

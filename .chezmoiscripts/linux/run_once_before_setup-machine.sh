@@ -21,3 +21,9 @@ if ! has atuin; then
 else
   atuin update
 fi
+
+if ! has pnpm; then
+  curl -fsSL https://get.pnpm.io/install.sh | sh -
+else
+  pnpm self-update
+fi
