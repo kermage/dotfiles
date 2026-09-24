@@ -3,4 +3,5 @@ if ( -Not ( Get-Command scoop -ErrorAction SilentlyContinue ) ) {
 				[System.Environment]::GetEnvironmentVariable("PATH", "User")
 }
 
-scoop install {{ .packages.common | join " " }} {{ .packages.local | join " " }} {{ .packages.windows | join " " }}
+{{ $packages := concat .packages.common .packages.local .packages.windows -}}
+scoop install {{ without $packages "dtop" | join " " }}

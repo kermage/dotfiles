@@ -31,7 +31,9 @@ packages:
     - poppler
     - resvg
     - dtop
+    - handy
   darwin:
+    - mole
     - sevenzip
     - subversion
     - font-jetbrains-mono-nerd-font
