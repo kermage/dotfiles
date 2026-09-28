@@ -64,4 +64,5 @@ if [[ $- == *i* ]]; then
 	}
 
 	. $HOME/.aliases-functions
+	[ -f "$HOME/.local/env" ] && . $HOME/.local/env
 fi
