@@ -5,9 +5,9 @@ _SHELL=""
 _SUFFIX=""
 
 if [ -n "$BASH_VERSION" ]; then
-    _SHELL="bash"
+	_SHELL="bash"
 elif [ -n "$ZSH_VERSION" ]; then
-    _SHELL="zsh"
+	_SHELL="zsh"
 fi
 
 {{ if eq .chezmoi.os "linux" -}}
