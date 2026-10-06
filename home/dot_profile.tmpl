@@ -7,13 +7,18 @@ export SHELL_SESSION_DID_INIT=1
 
 . "$HOME/.atuin/bin/env"
 
-if [ -d "${HOME}/.profile.d" ] ; then
-	for script in ${HOME}/.profile.d/*.sh ; do
+source_profile_d() {
+	# zsh aborts the rest of this file when a glob matches nothing
+	[ -n "${ZSH_VERSION-}" ] && setopt local_options null_glob
+	for script in "${HOME}"/.profile.d/*.sh ; do
+		[ -e "${script}" ] || continue
 		echo Sourcing "${script}" ...
 		. "${script}"
 		echo
 	done
-fi
+}
+
+[ -d "${HOME}/.profile.d" ] && source_profile_d
 
 
 # pnpm

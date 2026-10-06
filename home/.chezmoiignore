@@ -4,6 +4,10 @@
 .zshrc
 {{ end }}
 
+{{ if eq .chezmoi.os "darwin" }}
+.profile.d/0_start-ssh-agent.sh
+{{ end }}
+
 {{ if ne .chezmoi.os "windows" }}
 .chezmoiscripts/windows/**
 {{ end }}
