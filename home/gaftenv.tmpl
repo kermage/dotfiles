@@ -34,7 +34,9 @@ eval "command_not_found_${_SUFFIX}() { [ \$(command -v \${0}.exe) ] && \${0}.exe
 {{   end -}}
 {{ end -}}
 if [ -n "$_SHELL" ]; then
+	{{ if ne .chezmoi.os "windows" -}}
 	eval "$(mise activate $_SHELL)"
+	{{ end -}}
 	eval "$(atuin init $_SHELL)"
 	eval "$(starship init $_SHELL)"
 	eval "$(zoxide init $_SHELL)"
