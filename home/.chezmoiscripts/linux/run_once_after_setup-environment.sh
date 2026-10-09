@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 PATH="$HOME/.local/bin${PATH+:$PATH}"
 
