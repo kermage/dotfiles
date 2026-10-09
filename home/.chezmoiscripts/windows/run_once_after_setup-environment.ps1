@@ -12,6 +12,13 @@ if ( -Not ( Get-Command scoop -ErrorAction SilentlyContinue ) ) {
 
 bat cache --build
 
+# pnpm's installer sets PNPM_HOME and %PNPM_HOME%\bin only in the user registry,
+# so neither reaches this process. Resolve it as the installer does.
+if (-Not $env:PNPM_HOME) {
+	$env:PNPM_HOME = if ($env:XDG_DATA_HOME) { Join-Path $env:XDG_DATA_HOME 'pnpm' } else { Join-Path $env:LOCALAPPDATA 'pnpm' }
+}
+$env:PATH = "$env:PNPM_HOME\bin;$env:PATH"
+
 pnpm runtime set --global node latest
 if ($LASTEXITCODE -ne 0) {
 	throw 'pnpm runtime set failed'
