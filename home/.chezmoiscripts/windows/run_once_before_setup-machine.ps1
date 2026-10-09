@@ -25,6 +25,11 @@ if ( -Not ( Get-Command atuin -ErrorAction SilentlyContinue ) ) {
 	}
 }
 
+# pnpm's installer shells out to tar. Driven from Git Bash, PowerShell inherits
+# a PATH where GNU tar precedes the native one, and GNU tar reads a C:\ path as
+# a remote host: "Cannot connect to C: resolve failed". System32 first fixes it.
+$env:PATH = "$env:SystemRoot\System32;$env:PATH"
+
 if ( -Not ( Get-Command pnpm -ErrorAction SilentlyContinue ) ) {
 	iwr https://get.pnpm.io/install.ps1 -useb | iex
 } else {
