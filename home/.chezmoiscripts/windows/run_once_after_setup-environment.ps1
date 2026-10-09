@@ -1,3 +1,5 @@
+$ErrorActionPreference = 'Stop'
+
 [Environment]::SetEnvironmentVariable("XDG_CONFIG_HOME", "%USERPROFILE%\.config", "User")
 [Environment]::SetEnvironmentVariable("BAT_CONFIG_DIR", "%USERPROFILE%\.config\bat", "User")
 [Environment]::SetEnvironmentVariable("YAZI_CONFIG_HOME", "%USERPROFILE%\.config\yazi", "User")
@@ -11,4 +13,11 @@ if ( -Not ( Get-Command scoop -ErrorAction SilentlyContinue ) ) {
 bat cache --build
 
 pnpm runtime set --global node latest
+if ($LASTEXITCODE -ne 0) {
+	throw 'pnpm runtime set failed'
+}
+
 pnpm install --global npm
+if ($LASTEXITCODE -ne 0) {
+	throw 'pnpm install npm failed'
+}

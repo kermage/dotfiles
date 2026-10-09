@@ -1,3 +1,5 @@
+$ErrorActionPreference = 'Stop'
+
 if ( -Not ( Get-Command scoop -ErrorAction SilentlyContinue ) ) {
 	$env:PATH = [System.Environment]::GetEnvironmentVariable("PATH", "Machine") + ";" +
 				[System.Environment]::GetEnvironmentVariable("PATH", "User")
@@ -5,3 +7,6 @@ if ( -Not ( Get-Command scoop -ErrorAction SilentlyContinue ) ) {
 
 {{ $packages := concat .packages.common .packages.local .packages.windows -}}
 scoop install {{ without $packages "dtop" | join " " }}
+if ($LASTEXITCODE -ne 0) {
+	throw 'scoop install failed'
+}
