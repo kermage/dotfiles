@@ -1,7 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
-PATH="$HOME/.local/bin${PATH+:$PATH}"
+export PNPM_HOME="${PNPM_HOME:-${XDG_DATA_HOME:-$HOME/.local/share}/pnpm}"
+PATH="$PNPM_HOME/bin:$HOME/.local/bin${PATH+:$PATH}"
 
 mise install
 
