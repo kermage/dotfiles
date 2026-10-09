@@ -19,7 +19,7 @@ scoop bucket add extras
 scoop bucket add nerd-fonts
 
 if ( -Not ( Get-Command atuin -ErrorAction SilentlyContinue ) ) {
-	Invoke-RestMethod -Uri https://setup.atuin.sh | sh
+	Invoke-RestMethod -Uri https://setup.atuin.sh | sh -s -- --non-interactive
 	if ($LASTEXITCODE -ne 0) {
 		throw 'atuin install failed'
 	}
