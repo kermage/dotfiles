@@ -1,0 +1,174 @@
+name: validation
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  bootstrap:
+    name: bootstrap (${{ matrix.os }}, ${{ matrix.bootstrap }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+        bootstrap: [local]
+        include:
+          - os: ubuntu-latest
+            bootstrap: remote
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # The README commands, sourced from this checkout instead of a clone of
+      # kermage/dotfiles. GITHUB_PATH and GITHUB_ENV are hidden from them because
+      # the atuin and pnpm installers append to those files when set, which would
+      # hand later steps a PATH no real login gets.
+      - name: Bootstrap as the README's Local command
+        if: matrix.bootstrap == 'local'
+        run: |
+          set -euo pipefail
+          env -u GITHUB_PATH -u GITHUB_ENV \
+            sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "$HOME/bin" init kermage --apply --source "$PWD"
+          echo "CHEZMOI=$HOME/bin/chezmoi" >> "$GITHUB_ENV"
+
+      - name: Bootstrap as the README's Remote command
+        if: matrix.bootstrap == 'remote'
+        run: |
+          set -euo pipefail
+          # --one-shot purges the source it was given, so it gets a copy, .git
+          # included, or init would clone kermage/dotfiles instead. It also purges
+          # the binary, which the installer puts in ./bin, so it runs from scratch.
+          cp -R "$PWD" "$RUNNER_TEMP/source"
+          mkdir "$RUNNER_TEMP/remote"
+          cd "$RUNNER_TEMP/remote"
+          env -u GITHUB_PATH -u GITHUB_ENV \
+            sh -c "$(curl -fsLS get.chezmoi.io)" -- init kermage --one-shot --source "$RUNNER_TEMP/source"
+          sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "$RUNNER_TEMP/bin"
+          echo "CHEZMOI=$RUNNER_TEMP/bin/chezmoi" >> "$GITHUB_ENV"
+
+      - name: Assert the target state matches the source
+        run: |
+          set -euo pipefail
+          # The one-shot purged the record of which scripts ran, so on the remote
+          # leg every script would show as pending.
+          exclude=none
+          if [ "${{ matrix.bootstrap }}" = remote ]; then
+            exclude=scripts
+          fi
+
+          # Catches content drift and any script still pending.
+          "$CHEZMOI" verify --source "$PWD" --exclude="$exclude"
+
+          # status always exits 0, so its stdout is what carries the signal. Its
+          # stderr is left out: after the one-shot purged the config, every call
+          # warns there that the config template has changed.
+          drift="$("$CHEZMOI" status --source "$PWD" --exclude="$exclude")"
+          if [ -n "$drift" ]; then
+            echo "target state differs from source state:" >&2
+            echo "$drift" >&2
+            exit 1
+          fi
+
+      - name: Assert Homebrew installed the listed packages
+        if: runner.os == 'macOS'
+        run: |
+          set -euo pipefail
+          listed="$("$CHEZMOI" execute-template --source "$PWD" --file .github/listed-packages.tmpl)"
+          missing=0
+          while read -r name; do
+            brew list --versions "$name" >/dev/null 2>&1 \
+              || brew list --cask --versions "$name" >/dev/null 2>&1 \
+              || { echo "not installed: $name" >&2; missing=1; }
+          done <<< "$listed"
+          exit "$missing"
+
+      - name: Assert mise installed the listed packages
+        if: runner.os == 'Linux'
+        run: |
+          set -euo pipefail
+          listed="$("$CHEZMOI" execute-template --source "$PWD" --file .github/listed-packages.tmpl)"
+          export PATH="$HOME/.local/bin:$PATH"
+          missing=0
+          while read -r name; do
+            # setup-machine installs git with apt, and the mise config leaves it out.
+            if [ "$name" = git ]; then
+              [ "$(dpkg-query -W -f='${db:Status-Status}' git 2>/dev/null)" = installed ]
+            else
+              mise where "$name" >/dev/null 2>&1
+            fi || { echo "not installed: $name" >&2; missing=1; }
+          done <<< "$listed"
+          exit "$missing"
+
+      - name: Assert scoop installed the listed packages
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $listed = & "$HOME\bin\chezmoi.exe" execute-template --source $PWD --file .github/listed-packages.tmpl
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+          # Scoop puts its shims on the user PATH in the registry, which a later
+          # step of an already running runner does not see. Its exit status is
+          # lost outside its .ps1 shim, so its export is parsed instead.
+          $env:PATH = "$HOME\scoop\shims;$env:PATH"
+          $apps = (scoop export | ConvertFrom-Json).apps
+          $missing = $listed | Where-Object {
+            $name = $_
+            -not ($apps | Where-Object { $_.Name -eq $name -and $_.Info -ne 'Install failed' })
+          }
+          $missing | ForEach-Object { "not installed: $_" }
+          if ($missing) { exit 1 }
+
+      - name: Assert a shell starts through the startup files
+        run: |
+          set -euo pipefail
+          errors="$(mktemp)"
+          allowed="$(mktemp)"
+          status=0
+          # A step's bash reads no startup file, so each check starts an inner shell
+          # that does.
+          case "$RUNNER_OS" in
+            macOS)
+              /bin/zsh -l -i -c 'exit 0' </dev/null 2>"$errors" || status=$?
+              # fzf --zsh complains about zle only when zsh has no terminal, which a
+              # real login always has.
+              cat > "$allowed" <<'EOF'
+          \(eval\):1: can't change option: zle
+          EOF
+              ;;
+            Windows)
+              # Scoop writes its shims, and the directories of packages that skip
+              # shimming (starship), only to the user PATH in the registry, which a
+              # new terminal reads and a step of the already running runner does not.
+              user_path="$(powershell.exe -NoProfile -Command "[Environment]::GetEnvironmentVariable('Path', 'User')" | tr -d '\r')"
+              user_path="$(cygpath -u -p "$user_path")"
+              PATH="$user_path:$PATH" "$BASH" -l -c 'exit 0' </dev/null 2>"$errors" || status=$?
+              ;;
+            Linux)
+              # Only gaftenv is managed on Linux, sourced as the README's session
+              # setup does, with the tools' install directories in front as a login
+              # on the machine would put them.
+              PATH="$HOME/.local/bin:$HOME/.atuin/bin:$PATH" \
+                /bin/bash --noprofile --norc -c 'source ~/gaftenv' </dev/null 2>"$errors" || status=$?
+              ;;
+          esac
+
+          cat "$errors" >&2
+          unexpected="$(grep -v -x -E -f "$allowed" "$errors" || true)"
+          if [ "$status" -ne 0 ] || [ -n "$unexpected" ]; then
+            echo "shell start: exit $status, unexpected stderr:" >&2
+            echo "$unexpected" >&2
+            exit 1
+          fi

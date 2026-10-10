@@ -1,0 +1,12 @@
+{{- /*
+Renders, one per line, the listed packages this OS's install-packages script
+installs. It mirrors those scripts' selection, so a package they skip is
+skipped here too.
+*/ -}}
+{{- $packages := .packages.common -}}
+{{- if eq .chezmoi.os "darwin" -}}
+{{-   $packages = concat .packages.common .packages.local .packages.darwin -}}
+{{- else if eq .chezmoi.os "windows" -}}
+{{-   $packages = without (concat .packages.common .packages.local .packages.windows) "dtop" -}}
+{{- end -}}
+{{ join "\n" $packages }}
