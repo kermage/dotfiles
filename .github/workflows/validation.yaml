@@ -194,3 +194,9 @@ jobs:
             echo "$unexpected" >&2
             exit 1
           fi
+
+      # chezmoi managed reads the source state, not the home directory, and no
+      # template reads the bootstrap mode, so the other legs would repeat this.
+      - name: Assert the Managed targets table matches chezmoi
+        if: matrix.bootstrap == 'local' && matrix.home == 'fresh'
+        run: .github/check-managed-targets.sh "$CHEZMOI" "$RUNNER_OS"

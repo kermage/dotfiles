@@ -17,6 +17,17 @@ Setting up a machine in one shot: apply once, then keep no source checkout or
 config behind.
 _Avoid_: server install, Linux install
 
+### Targets
+
+**Managed target**:
+A path in the home directory that an apply creates and keeps as the repo says.
+_Avoid_: managed file, dotfile
+
+**External**:
+A managed target whose content is downloaded from a URL on apply instead of kept in
+the repo.
+_Avoid_: vendored file, remote file
+
 ### Packages
 
 **Listed package**:
