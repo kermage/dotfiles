@@ -1,0 +1,10 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- $tracked := dict -}}
+{{- if eq .chezmoi.os "linux" -}}
+{{-   range .packages.common -}}
+{{-     if ne . "git" -}}
+{{-       $tracked = set $tracked (printf "tools.%s" .) "latest" -}}
+{{-     end -}}
+{{-   end -}}
+{{- end -}}
+{{- includeTemplate "tracked-keys" (dict "stdin" .chezmoi.stdin "format" "toml" "tracked" $tracked) -}}

@@ -1,0 +1,6 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- $tracked := `
+"enter_accept" = true
+"theme.name" = "catppuccin-macchiato-mauve"
+` | fromToml -}}
+{{- includeTemplate "tracked-keys" (dict "stdin" .chezmoi.stdin "format" "toml" "tracked" $tracked) -}}
