@@ -1,0 +1,43 @@
+{{- /*
+Sets tracked keys in a file the client also writes.
+
+Takes a dict of stdin (the live file), format ("json" or "toml") and tracked
+(a flat map of dotted path to the whole value the repo owns). While every
+tracked path already holds its value, the live file passes through untouched,
+so client writes to machine-owned keys never show in status.
+*/ -}}
+{{- $live := dict -}}
+{{- if trim .stdin -}}
+{{-   if eq .format "json" -}}
+{{-     $live = fromJson .stdin -}}
+{{-   else -}}
+{{-     $live = fromToml .stdin -}}
+{{-   end -}}
+{{- end -}}
+{{- $drift := false -}}
+{{- range $path, $want := .tracked -}}
+{{-   $have := $live -}}
+{{-   $found := true -}}
+{{-   range splitList "." $path -}}
+{{-     if and $found (kindIs "map" $have) (hasKey $have .) -}}
+{{-       $have = get $have . -}}
+{{-     else -}}
+{{-       $found = false -}}
+{{-     end -}}
+{{-   end -}}
+{{-   if or (not $found) (ne (toJson $have) (toJson $want)) -}}
+{{-     $drift = true -}}
+{{-   end -}}
+{{- end -}}
+{{- if not $drift -}}
+{{-   .stdin -}}
+{{- else -}}
+{{-   range $path, $want := .tracked -}}
+{{-     $live = setValueAtPath $path $want $live -}}
+{{-   end -}}
+{{-   if eq .format "json" -}}
+{{-     toPrettyJson $live -}}
+{{-   else -}}
+{{-     toToml $live -}}
+{{-   end -}}
+{{- end -}}

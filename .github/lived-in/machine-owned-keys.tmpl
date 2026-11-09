@@ -1,0 +1,40 @@
+{{- /*
+Fails unless every listed machine-owned key still holds its seeded value.
+Tracked keys need no check here: an empty status already proves they match.
+*/ -}}
+{{- $seedDir := joinPath .chezmoi.workingTree ".github" "lived-in" -}}
+{{- $files := list
+      (dict "seed" "atuin-config.toml" "live" ".config/atuin/config.toml"
+            "paths" (list "history_filter" "cwd_filter")) -}}
+{{- if ne .chezmoi.os "windows" -}}
+{{-   $files = append $files
+        (dict "seed" "mise-config.toml" "live" ".config/mise/config.toml"
+              "paths" (list "settings.trusted_config_paths")) -}}
+{{- end -}}
+{{- $lost := list -}}
+{{- range $files -}}
+{{-   $file := .live -}}
+{{-   $seed := include (joinPath $seedDir .seed) | fromToml -}}
+{{-   $live := include (joinPath $.chezmoi.homeDir $file) | fromToml -}}
+{{-   range $path := .paths -}}
+{{-     $values := list -}}
+{{-     range $doc := list $seed $live -}}
+{{-       $value := $doc -}}
+{{-       range splitList "." $path -}}
+{{-         if and (kindIs "map" $value) (hasKey $value .) -}}
+{{-           $value = get $value . -}}
+{{-         else -}}
+{{-           $value = "(missing)" -}}
+{{-         end -}}
+{{-       end -}}
+{{-       $values = append $values (toJson $value) -}}
+{{-     end -}}
+{{-     if ne (index $values 0) (index $values 1) -}}
+{{-       $lost = append $lost (printf "%s %s: seeded %s, now %s" $file $path (index $values 0) (index $values 1)) -}}
+{{-     end -}}
+{{-   end -}}
+{{- end -}}
+{{- if $lost -}}
+{{-   fail (join "\n" $lost) -}}
+{{- end -}}
+machine-owned keys intact

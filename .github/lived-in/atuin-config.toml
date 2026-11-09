@@ -1,0 +1,6 @@
+enter_accept = false
+history_filter = ["^lived-in "]
+cwd_filter = ["^/tmp/lived-in"]
+
+[theme]
+name = "default"
