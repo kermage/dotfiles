@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   bootstrap:
-    name: bootstrap (${{ matrix.os }}, ${{ matrix.bootstrap }})
+    name: bootstrap (${{ matrix.os }}, ${{ matrix.bootstrap }}, ${{ matrix.home }})
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     strategy:
@@ -23,15 +23,31 @@ jobs:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
         bootstrap: [local]
+        # lived-in: atuin and mise settings already exist, holding machine-owned
+        # keys beside tracked keys drifted from the repo or missing.
+        home: [fresh, lived-in]
         include:
           - os: ubuntu-latest
             bootstrap: remote
+            home: fresh
     defaults:
       run:
         shell: bash
     steps:
       - name: Check out
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Seed hand-written settings
+        if: matrix.home == 'lived-in'
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME/.config/atuin"
+          cp .github/lived-in/atuin-config.toml "$HOME/.config/atuin/config.toml"
+          # The repo leaves mise's config alone on Windows.
+          if [ "$RUNNER_OS" != Windows ]; then
+            mkdir -p "$HOME/.config/mise"
+            cp .github/lived-in/mise-config.toml "$HOME/.config/mise/config.toml"
+          fi
 
       # The README commands, sourced from this checkout instead of a clone of
       # kermage/dotfiles. GITHUB_PATH and GITHUB_ENV are hidden from them because
@@ -82,6 +98,12 @@ jobs:
             echo "$drift" >&2
             exit 1
           fi
+
+      - name: Assert machine-owned keys survived
+        if: matrix.home == 'lived-in'
+        run: |
+          set -euo pipefail
+          "$CHEZMOI" execute-template --source "$PWD" --file .github/lived-in/machine-owned-keys.tmpl
 
       - name: Assert Homebrew installed the listed packages
         if: runner.os == 'macOS'
